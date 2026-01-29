@@ -1,0 +1,70 @@
+module interface_mtu {
+
+  namespace "http://example.com/interface_mtu";
+  prefix interface_mtu;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-common {
+    prefix tailf;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  description
+    "Bla bla...";
+
+  revision 2016-01-01 {
+    description
+      "Initial revision.";
+  }
+
+  list interface_mtu {
+    description "This is an RFS skeleton service";
+
+    key name;
+    leaf name {
+      tailf:info "Unique service id";
+      tailf:cli-allow-range;
+      type string;
+    }
+
+    uses ncs:service-data;
+    ncs:servicepoint interface_mtu-servicepoint;
+
+    // may replace this with other ways of refering to the devices.
+    list device {
+      key name;
+
+      leaf name {
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:name";
+        }
+      }
+
+      list interfaces {
+        key "type name";
+
+        leaf type {
+          type enumeration {
+            enum HundredGigE;
+            enum TenGigE;
+            enum GigabitEthernet;
+             
+          }
+        }
+        
+        leaf name {
+          type string;
+        }
+      }
+    }
+
+    // replace with your own stuff here
+    leaf mtu {
+      type uint16;
+    }
+  }
+}
