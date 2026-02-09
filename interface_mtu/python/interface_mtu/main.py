@@ -28,12 +28,12 @@ class ServiceCallbacks(Service):
                     int_type = "eth"
                 else:
                     int_type = interface.type
-            vars.add('NAME', service_name)
-            vars.add('MTU', service_mtu)
-            vars.add('DEVICE', device_name)
-            vars.add('TYPE', int_type)
-            template = ncs.template.Template(interface)
-            template.apply('interface_mtu-template', vars)
+                vars.add('NAME', service_name)
+                vars.add('MTU', service_mtu)
+                vars.add('DEVICE', device_name)
+                vars.add('TYPE', int_type)
+                template = ncs.template.Template(interface)
+                template.apply('interface_mtu-template', vars)
 
     # The pre_modification() and post_modification() callbacks are optional,
     # and are invoked outside FASTMAP. pre_modification() is invoked before
