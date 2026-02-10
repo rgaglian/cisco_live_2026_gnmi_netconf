@@ -1,5 +1,5 @@
 <config-template xmlns="http://tail-f.com/ns/config/1.0">
-	<? set DESC="NSO_SERVICE_{$NAME}" ?>   
+	<?set DESC="NSO_SERVICE_{$NAME}" ?>   
    <devices xmlns="http://tail-f.com/ns/ncs">
     <device>
       <name>{$DEVICE}</name>
@@ -8,8 +8,8 @@
         <interfaces xmlns="http://openconfig.net/yang/interfaces">
           <interface>
             <name>{$TYPE}{name}</name>
-	    <config>
-	      <description>{$DESC}</description>
+	          <config>
+	            <description>{$DESC}</description>
               <type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
               <mtu>{$MTU}</mtu>
             </config>
@@ -20,16 +20,25 @@
           <intf-items>
             <phys-items>
               <PhysIf-list>
-		<id>{$TYPE}{name}</id>
-		<descr>{$DESC}</descr>
-		<mtu>{$MTU}</mtu>
+                <id>{$TYPE}{name}</id>
+                <descr>{$DESC}</descr>
+                <mtu>{$MTU}</mtu>
                 <layer>Layer2</layer>
                 <userCfgdFlags>admin_mtu</userCfgdFlags>
               </PhysIf-list>
             </phys-items>
           </intf-items>
         </System>
-                 <!-- IOSXE CLI -->
+      <!-- Junos Native -->
+	      <configuration xmlns="http://xml.juniper.net/xnm/1.1/xnm">
+          <interfaces>
+            <interface>
+              <description>{$DESC}</description>
+              <name>{$TYPE}-{name}</name>
+	            <mtu>{$MTU}</mtu>
+            </interface>
+          </interfaces>
+        </configuration>
       </config>
     </device>
   </devices>
